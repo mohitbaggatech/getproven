@@ -16,10 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from weather.views import LocationFormView
+from weather.views import LocationFormView, WeatherForecastView
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("weather/", LocationFormView.as_view()),
+    path("admin/", admin.site.urls),
+    path("weather/", LocationFormView.as_view(), name="weather"),
+    path("forecast/<id>", WeatherForecastView.as_view(), name="forecast"),
     path("__reload__/", include("django_browser_reload.urls")),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

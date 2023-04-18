@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<style>
+#id_detailing {
+	width: 50%;
+	padding: 10px 10px;
+	background-color: transparent;
+	border-radius: 8px;
+	border-width: 0.12px;
+	margin-left: 5px;
+}
+#back-arrow {
+	width: 16px;
+}
+</style>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.tailwindcss.com"></script>
+{% endblock %}
+
+{% block content %}
+<div class="m-10">
+	{% if data %}
+	<div class="alert shadow-lg">
+		<div>
+			<a href="/weather">
+				<img id="back-arrow" src="{% static 'weather/left-arrow.png' %}" /></a>
+			<div>
+				<h3 class="font-bold">{{data.location.lat}}, {{data.location.long}}</h3>
+			</div>
+		</div>
+		<div class="flex-none">
+			<a class="btn btn-sm" href="/weather">Change</a>
+		</div>
+	</div>
+	<div class="mockup-code bg-primary text-primary-content mt-10">
+		<pre data-prefix="$"><code>Response :<br><div class="px-5 py-5"> {{data.weather_data | pprint }}</div></code></pre>
+	</div>
+	{% elif error %}
+	<div class="mockup-code bg-error-content text-error mt-10">
+		<pre data-prefix="$"><code>{{error}}</code></pre>
+	</div>
+	{% endif %}
+</div>
+{% endblock %}
+
